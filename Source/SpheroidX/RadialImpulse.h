@@ -1,4 +1,5 @@
 // copyright Benedikt Oern Hjaltason
+// *****---->PC VERSION <----*****
 
 #pragma once
 

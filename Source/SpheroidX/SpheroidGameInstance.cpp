@@ -1,4 +1,5 @@
 ﻿// copyright Benedikt Örn Hjaltason
+// *****---->PC VERSION <----*****
 
 
 #include "SpheroidGameInstance.h"

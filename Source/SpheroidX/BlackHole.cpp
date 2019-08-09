@@ -1,4 +1,5 @@
 ﻿// copyright Benedikt Orn Hjaltason
+// *****---->PC VERSION <----*****
 
 
 #include "BlackHole.h"
