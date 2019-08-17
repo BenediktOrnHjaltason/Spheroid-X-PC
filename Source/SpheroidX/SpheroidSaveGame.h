@@ -232,9 +232,8 @@ public:
 		UPROPERTY(VisibleAnywhere)
 			bool Locked_L48 = true;
 
-
 		UPROPERTY(VisibleAnywhere)
-		bool bShouldSignInUser = true;
+			bool DummyTest = true;
 
 		//-----------/SavedData--------------//
 };

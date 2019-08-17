@@ -135,7 +135,7 @@ void USpheroidGameInstance::SaveLevelTimesToDisk()
 		}
 
 		SaveObject->bPortalHasBeenUnlocked = bPortalHasBeenUnlocked;
-		SaveObject->bShouldSignInUser = bShouldSignInUser;
+		SaveObject->DummyTest = DummyTest;
 
 		UGameplayStatics::SaveGameToSlot(SaveObject, SlotName, UserIndex);
 }
@@ -152,7 +152,7 @@ void USpheroidGameInstance::LoadLevelTimesFromDisk()
 		if (LoadObject)
 		{
 			bPortalHasBeenUnlocked = LoadObject->bPortalHasBeenUnlocked;
-			bShouldSignInUser = LoadObject->bShouldSignInUser;
+			DummyTest = LoadObject->DummyTest;
 
 			if (bPortalHasBeenUnlocked) UE_LOG(LogTemp, Warning, TEXT("Portal has been unlocked before"))
 
@@ -169,25 +169,6 @@ void USpheroidGameInstance::LoadLevelTimesFromDisk()
 					BreakTimeLoad(LevelTimes[i], i);
 				}
 			}
-		}
-	}
-}
-
-void USpheroidGameInstance::ManageAds()
-{
-	if (LevelIndex > 2)
-	{
-		++AdsDecider;
-
-		if (AdsDecider == 1)
-		{
-			M_LoadInterStitialAd();
-		}
-
-		else if (AdsDecider == 2)
-		{
-			AdsDecider = 0;
-			M_ShowInterStitialAd();
 		}
 	}
 }

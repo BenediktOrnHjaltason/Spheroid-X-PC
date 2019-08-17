@@ -82,7 +82,6 @@ public:
 
 	void ManageNewHighScore(float NewTime);
 
-
 	void BreakTimeLevelEnd(const float& f_Seconds, const int&p_LevelIndex);
 
 	void BreakTimeLoad(const float& f_Seconds, const int&LevelIndex);
@@ -90,20 +89,6 @@ public:
 	float GetLevelTime() { return LevelTimes[LevelIndex]; }
 	void SetLevelTime(float NewTime) { LevelTimes[LevelIndex] = NewTime; }
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void HandleLeaderboard(int CurrentMilliseconds);
+	bool DummyTest = true;
 
-	UFUNCTION(BlueprintCallable)
-		void ManageAds();
-
-	UFUNCTION(BlueprintImplementableEvent)
-		void M_LoadInterStitialAd();
-
-	UFUNCTION(BlueprintImplementableEvent)
-		void M_ShowInterStitialAd();
-
-	int AdsDecider = 0;
-
-	UPROPERTY(BlueprintReadWrite)
-		bool bShouldSignInUser = true;
 };

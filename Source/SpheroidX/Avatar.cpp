@@ -90,6 +90,15 @@ void AAvatar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (bGameIsPaused)
+	{
+		ExhaustMID->SetScalarParameterValue("Opacity", 0);
+		Exhaust->SetRelativeScale3D(FVector(0.5f, UKismetMathLibrary::Lerp(0.5f, 1.0f, 0), 1));
+
+		AudioComp->SetVolumeMultiplier(0);
+		return;
+	}
+
 	InputMultiplier = UKismetMathLibrary::Sqrt(
 		UKismetMathLibrary::MultiplyMultiply_FloatFloat(SpheroidXValue, 2)
 		+ UKismetMathLibrary::MultiplyMultiply_FloatFloat(SpheroidYValue, 2));
@@ -120,6 +129,8 @@ void AAvatar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Boost", IE_Pressed, this, &AAvatar::BoostProxy);
 	PlayerInputComponent->BindAction("Portal", IE_Pressed, this, &AAvatar::UsePortal);
 	PlayerInputComponent->BindAction("MoveCamera", IE_Pressed, this, &AAvatar::MoveCamera);
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AAvatar::PauseGame);
+
 }
 
 void AAvatar::SpheroidXAxis(float AxisValue)
@@ -189,8 +200,6 @@ void AAvatar::CalculateTime(int LevelIndex)
 	GameInstance->CurrentTimeSeconds = CurrentWorld->GetRealTimeSeconds() - TimeAtShootOut;
 
 	GameInstance->CurrentTimesMilliSeconds = GameInstance->CurrentTimeSeconds * 1000;
-
-	GameInstance->HandleLeaderboard(GameInstance->CurrentTimesMilliSeconds);
 
 	GameInstance->BreakTimeLevelEnd(GameInstance->CurrentTimeSeconds, GameInstance->LevelIndex);
 
@@ -297,7 +306,7 @@ void AAvatar::EffectCleanUp()
 
 void AAvatar::BoostProxy()
 {
-	if (bIsDeathSequenceRunning || bIsInLevelStart) return;
+	if (bIsDeathSequenceRunning || bIsInLevelStart || bGameIsPaused) return;
 
 	Collision->SetPhysicsLinearVelocity(FVector(0.f, 0.f, 0.f));
 
@@ -318,7 +327,7 @@ void AAvatar::BoostEffect(float TimelineScale, float TimelineOpacity)
 void AAvatar::StopMomentum()
 {
 
-	if (bIsDeathSequenceRunning || bIsInLevelStart) return;
+	if (bIsDeathSequenceRunning || bIsInLevelStart || bGameIsPaused) return;
 
 	Collision->SetPhysicsLinearVelocity(FVector(0, 0, 0));
 
@@ -398,11 +407,7 @@ void AAvatar::PortalDissapear()
 
 void AAvatar::MoveCamera()
 {
-	bCameraSwitchBool = !bCameraSwitchBool;
-
-	if (bCameraSwitchBool) Camera->SetRelativeLocation(CameraLowerPosition);
-
-	else Camera->SetRelativeLocation(CameraUpperPosition);
+	
 }
 
 void AAvatar::ResetPortalOnDeath()
@@ -413,3 +418,4 @@ void AAvatar::ResetPortalOnDeath()
 	LevelPortal->SetActorHiddenInGame(true);
 	GameModeRef->ChangePortalButtonIcon(true);
 }
+

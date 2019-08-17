@@ -30,7 +30,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* PlaneMesh;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		USphereComponent* Collision;
 
 	UPROPERTY(EditAnywhere)
@@ -298,7 +298,14 @@ public:
 			void CreateWinScreen();
 
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool bIsInLevelStart = true;
+
+		UFUNCTION(BlueprintImplementableEvent)
+			void PauseGame();
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+			bool bGameIsPaused = false;
 
 protected:
 	// Called when the game starts or when spawned
